@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Sustainability & Waste Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN for graphical reporting -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>🌱 GreenCorp KPI & Waste Management Dashboard</h1>
+      <p>Monitor waste processing, sustainability goals, and environmental impact.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- KPI Overview Cards -->
+    <section class="cards-grid">
+      <div class="card">
+        <h3>Green Protection Score</h3>
+        <div class="metric green-score" id="greenScore">--</div>
+        <p class="subtext">Overall Environmental Performance</p>
+      </div>
+      <div class="card">
+        <h3>Properly Processed Waste</h3>
+        <div class="metric" id="properPercentage">--%</div>
+        <p class="subtext">Compliance & Proper Disposal Target</p>
+      </div>
+      <div class="card">
+        <h3>Recycled / Reused Rate</h3>
+        <div class="metric" id="recycleRate">--%</div>
+        <p class="subtext">Target: <span id="targetRecycle">--</span>%</p>
+      </div>
+      <div class="card">
+        <h3>Total Waste Logged</h3>
+        <div class="metric" id="totalWaste">-- kg</div>
+        <p class="subtext">Across all facilities</p>
+      </div>
+    </section>
+
+    <!-- Analytics & Form Section -->
+    <section class="content-grid">
+      <!-- Data Logging Form -->
+      <div class="card form-card">
+        <h2>Log Waste Activity</h2>
+        <form id="wasteForm">
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="type">Waste Category</label>
+            <select id="type" required>
+              <option value="Recycled">Recycled</option>
+              <option value="Reused">Reused</option>
+              <option value="Composted">Composted</option>
+              <option value="Landfill">Landfill / General Waste</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="weightKg">Weight (in kg)</label>
+            <input type="number" id="weightKg" placeholder="e.g. 250" step="0.1" required>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="properlyProcessed" checked>
+            <label for="properlyProcessed">Process follows official compliance regulations?</label>
+          </div>
+
+          <button type="submit" class="btn">Add Entry</button>
+        </form>
+      </div>
+
+      <!-- Graphical Chart -->
+      <div class="card chart-card">
+        <h2>Waste Breakdown</h2>
+        <canvas id="wasteChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Detailed Table -->
+    <section class="card">
+      <h2>Recent Processing Audit Log</h2>
+      <table id="logsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Weight (kg)</th>
+            <th>Properly Processed?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows inserted via JavaScript -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
