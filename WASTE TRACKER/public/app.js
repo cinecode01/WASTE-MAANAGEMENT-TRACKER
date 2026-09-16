@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fetch Dashboard Metrics
-// Find this inside public/app.js and update loadDashboard:
 async function loadDashboard() {
   try {
     const res = await fetch('/api/dashboard');
@@ -22,7 +21,6 @@ async function loadDashboard() {
     document.getElementById('greenScore').innerText = `${data.metrics.greenScore} / 100`;
     document.getElementById('properPct').innerText = `${data.metrics.properProcessPercentage}%`;
     document.getElementById('recyclePct').innerText = `${data.metrics.recyclePercentage}%`;
-    document.getElementById('totalWaste').innerText = `${data.metrics.totalWasteKg} kg`;
 
     // Updates the progress bar fill width
     const progressBar = document.getElementById('greenProgressBar');
@@ -106,10 +104,12 @@ function renderChart(logs) {
 async function handleFormSubmit(e) {
   e.preventDefault();
 
+  const weightInput = document.getElementById('weightKg');
+
   const payload = {
     date: document.getElementById('date').value,
     type: document.getElementById('type').value,
-    weightKg: parseFloat(document.getElementById('weightKg').value),
+    weightKg: parseFloat(weightInput.value),
     properlyProcessed: document.getElementById('properlyProcessed').checked
   };
 
@@ -121,10 +121,13 @@ async function handleFormSubmit(e) {
     });
 
     if (res.ok) {
-      document.getElementById('weightKg').value = '';
+      weightInput.value = '';
       // Refresh UI
       await loadDashboard();
       await loadLogs();
+    } else {
+      const err = await res.json();
+      console.error("Failed to add log entry:", err);
     }
   } catch (err) {
     console.error("Error submitting entry:", err);
