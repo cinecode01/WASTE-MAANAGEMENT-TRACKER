@@ -13,16 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fetch Dashboard Metrics
+// Find this inside public/app.js and update loadDashboard:
 async function loadDashboard() {
   try {
     const res = await fetch('/api/dashboard');
     const data = await res.json();
 
     document.getElementById('greenScore').innerText = `${data.metrics.greenScore} / 100`;
-    document.getElementById('properPercentage').innerText = `${data.metrics.properProcessPercentage}%`;
-    document.getElementById('recycleRate').innerText = `${data.metrics.recyclePercentage}%`;
-    document.getElementById('targetRecycle').innerText = data.kpiGoals.targetRecyclePercentage;
+    document.getElementById('properPct').innerText = `${data.metrics.properProcessPercentage}%`;
+    document.getElementById('recyclePct').innerText = `${data.metrics.recyclePercentage}%`;
     document.getElementById('totalWaste').innerText = `${data.metrics.totalWasteKg} kg`;
+
+    // Updates the progress bar fill width
+    const progressBar = document.getElementById('greenProgressBar');
+    if (progressBar) {
+      progressBar.style.width = `${data.metrics.greenScore}%`;
+    }
   } catch (err) {
     console.error("Error loading dashboard metrics:", err);
   }
