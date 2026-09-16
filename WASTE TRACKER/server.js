@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware - Standardized on lowercase 'public'
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -80,8 +80,8 @@ app.get('/api/waste-logs', (req, res) => {
 app.post('/api/waste-logs', (req, res) => {
   const { date, type, weightKg, properlyProcessed } = req.body;
 
-  if (!date || !type || !weightKg) {
-    return res.status(400).json({ error: "Missing required fields" });
+  if (!date || !type || isNaN(weightKg)) {
+    return res.status(400).json({ error: "Missing or invalid required fields" });
   }
 
   const newLog = {
