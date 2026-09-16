@@ -3,104 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corporate Sustainability & Waste Tracker</title>
+  <title>Corporate Sustainability & Waste KPI Tracker</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Chart.js CDN for graphical reporting -->
+  <!-- Google Font for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>🌱 GreenCorp KPI & Waste Management Dashboard</h1>
-      <p>Monitor waste processing, sustainability goals, and environmental impact.</p>
+
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand">
+        <span class="logo-icon">🌱</span>
+        <span class="logo-text">EcoTrack <strong>Enterprise</strong></span>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span> System Live: <strong>Localhost Mode</strong>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <!-- KPI Overview Cards -->
-    <section class="cards-grid">
-      <div class="card">
-        <h3>Green Protection Score</h3>
-        <div class="metric green-score" id="greenScore">--</div>
-        <p class="subtext">Overall Environmental Performance</p>
+  <!-- Hero Banner -->
+  <section class="hero-banner">
+    <div class="container hero-content">
+      <h1>Corporate Waste Management & KPI Tracker</h1>
+      <p>Real-time analytics for tracking corporate recycling performance, disposal compliance, and environmental protection metrics.</p>
+    </div>
+  </section>
+
+  <main class="container main-content">
+
+    <!-- KPI Metric Cards Grid -->
+    <section class="metrics-grid">
+      <div class="metric-card score-card">
+        <div class="card-header">
+          <span>Green Protection Index</span>
+          <span class="badge badge-accent">KPI Target</span>
+        </div>
+        <div class="metric-value green-text" id="greenScore">--</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="greenProgressBar" style="width: 0%;"></div>
+        </div>
+        <p class="metric-subtext">Overall eco-compliance score</p>
       </div>
-      <div class="card">
-        <h3>Properly Processed Waste</h3>
-        <div class="metric" id="properPercentage">--%</div>
-        <p class="subtext">Compliance & Proper Disposal Target</p>
+
+      <div class="metric-card">
+        <div class="card-header">
+          <span>Properly Processed Waste</span>
+          <span class="badge">Compliance</span>
+        </div>
+        <div class="metric-value" id="properPct">--%</div>
+        <p class="metric-subtext">Adherence to official disposal standards</p>
       </div>
-      <div class="card">
-        <h3>Recycled / Reused Rate</h3>
-        <div class="metric" id="recycleRate">--%</div>
-        <p class="subtext">Target: <span id="targetRecycle">--</span>%</p>
-      </div>
-      <div class="card">
-        <h3>Total Waste Logged</h3>
-        <div class="metric" id="totalWaste">-- kg</div>
-        <p class="subtext">Across all facilities</p>
+
+      <div class="metric-card">
+        <div class="card-header">
+          <span>Recycle & Reuse Rate</span>
+          <span class="badge">Target: 80%</span>
+        </div>
+        <div class="metric-value" id="recyclePct">--%</div>
+        <p class="metric-subtext">Percentage diverted from landfill</p>
       </div>
     </section>
 
-    <!-- Analytics & Form Section -->
-    <section class="content-grid">
-      <!-- Data Logging Form -->
-      <div class="card form-card">
-        <h2>Log Waste Activity</h2>
+    <!-- Content Split: Logging Form + Doughnut Chart -->
+    <section class="content-split">
+      
+      <!-- Input Panel -->
+      <div class="panel form-panel">
+        <div class="panel-header">
+          <h2>Log Waste Activity</h2>
+          <p>Record daily facility waste data</p>
+        </div>
         <form id="wasteForm">
           <div class="form-group">
-            <label for="date">Date</label>
+            <label for="date">Logging Date</label>
             <input type="date" id="date" required>
           </div>
-          
+
           <div class="form-group">
-            <label for="type">Waste Category</label>
+            <label for="type">Waste Processing Category</label>
             <select id="type" required>
-              <option value="Recycled">Recycled</option>
-              <option value="Reused">Reused</option>
-              <option value="Composted">Composted</option>
-              <option value="Landfill">Landfill / General Waste</option>
+              <option value="Recycled">♻️ Recycled Material</option>
+              <option value="Reused">🔄 Reused Asset</option>
+              <option value="Composted">🍂 Composted Organic</option>
+              <option value="Landfill">🗑️ Landfill / General Waste</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="weightKg">Weight (in kg)</label>
-            <input type="number" id="weightKg" placeholder="e.g. 250" step="0.1" required>
+            <label for="weightKg">Weight (in Kilograms)</label>
+            <input type="number" id="weightKg" placeholder="e.g. 350.5" step="0.1" required>
           </div>
 
           <div class="form-group checkbox-group">
             <input type="checkbox" id="properlyProcessed" checked>
-            <label for="properlyProcessed">Process follows official compliance regulations?</label>
+            <label for="properlyProcessed">Process strictly follows verified environmental protocols?</label>
           </div>
 
-          <button type="submit" class="btn">Add Entry</button>
+          <button type="submit" class="submit-btn">Submit Log Entry</button>
         </form>
       </div>
 
-      <!-- Graphical Chart -->
-      <div class="card chart-card">
-        <h2>Waste Breakdown</h2>
-        <canvas id="wasteChart"></canvas>
+      <!-- Chart Panel -->
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Waste Stream Breakdown</h2>
+          <p>Distribution of processed materials</p>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="wasteChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Table Section -->
+    <section class="panel table-panel">
+      <div class="panel-header">
+        <h2>Recent Audit Entries</h2>
+        <p>Complete historical log of facility disclosures</p>
+      </div>
+      <div class="table-responsive">
+        <table id="logsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Weight (kg)</th>
+              <th>Regulatory Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dynamic rows populated via JavaScript -->
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <!-- Detailed Table -->
-    <section class="card">
-      <h2>Recent Processing Audit Log</h2>
-      <table id="logsTable">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Weight (kg)</th>
-            <th>Properly Processed?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Rows inserted via JavaScript -->
-        </tbody>
-      </table>
-    </section>
   </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 EcoTrack Enterprise | Corporate Sustainability Dashboard</p>
+    </div>
+  </footer>
 
   <script src="app.js"></script>
 </body>
